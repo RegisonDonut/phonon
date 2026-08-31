@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  launchd service for the MLX omni server.
+
+  Install:
+    cp Bundle/com.phonon.omni.plist ~/Library/LaunchAgents/
+    # edit the paths below if your checkout isn't at ~/speech2text
+    launchctl load -w ~/Library/LaunchAgents/com.phonon.omni.plist
+
+  It keeps MiniCPM-o warm in the background, restarts on crash, and starts at
+  login — so the menu-bar app always has a server to talk to.
+-->
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.phonon.omni</string>
+
+    <key>ProgramArguments</key>
+    <array>
+        <string>__PHONON_START_SERVER__</string>
+    </array>
+
+    <key>WorkingDirectory</key>
+    <string>__PHONON_ROOT__</string>
+
+    <key>RunAtLoad</key>
+    <true/>
+
+    <key>KeepAlive</key>
+    <true/>
+
+    <!-- Loopback only; never use the system proxy for this local server.
+         No S2T_MODEL: the server reads the active model from ~/.config/phonon/model. -->
+    <key>EnvironmentVariables</key>
+    <dict>
+        <key>S2T_PORT</key>
+        <string>8799</string>
+    </dict>
+
+    <key>StandardOutPath</key>
+    <string>/tmp/phonon-omni.log</string>
+    <key>StandardErrorPath</key>
+    <string>/tmp/phonon-omni.log</string>
+</dict>
+</plist>
