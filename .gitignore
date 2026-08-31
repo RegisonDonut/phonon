@@ -1,0 +1,14 @@
+.DS_Store
+.build/
+.swiftpm/
+.venv/
+.claude/
+build/
+build_pyi/
+dist/
+models/
+scripts/__pycache__/
+*.pyc
+*.pyo
+.env
+.env.*
